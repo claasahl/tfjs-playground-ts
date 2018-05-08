@@ -7,12 +7,17 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc:w": "tsc --watch",
+    "live-server": "live-server",
+    "start": "concurrently \"npm run tsc:w\" \"npm run live-server\""
   },
   "dependencies": {
     "@tensorflow/tfjs": "^0.10.3"
   },
   "devDependencies": {
+    "concurrently": "^3.5.1",
+    "live-server": "^1.2.0",
     "typescript": "^2.8.3"
   }
 }
