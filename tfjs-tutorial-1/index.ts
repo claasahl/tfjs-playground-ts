@@ -23,7 +23,7 @@ biases.print();
 a.square().print();
 a.add(b).print();
 
-function predict(input) {
+function predict(input: number) {
   return tf.tidy(() => {
     const x = tf.scalar(input);
     const ax2 = aa.mul(x.square());
@@ -49,9 +49,9 @@ model.add(
   })
 );
 
-const data = [-1,-2,-3,-4,-5,1,23,2,3,4,5];
-const labels = [-1,-1,-1,-1,-1,1,1,1,1,1,1];
+const data = tf.tensor1d([-1,-2,-3,-4,-5,1,23,2,3,4,5]);
+const labels = tf.tensor1d([-1,-1,-1,-1,-1,1,1,1,1,1,1]);
 const optimizer = tf.train.sgd(0.05);
 model.compile({optimizer, loss: 'categoricalCrossentropy'});
-model.fit({x: data, y: labels});
-model.predict(1).print();
+model.fit(data, labels);
+const prediction = model.predict(tf.scalar(1));
