@@ -19,7 +19,6 @@
     "clang-format": "~1.2.2",
     "http-server": "~0.10.0",
     "source-map-loader": "^0.2.3",
-    "ts-loader": "^4.3.0",
     "typescript": "^2.8.3"
   }
 }
