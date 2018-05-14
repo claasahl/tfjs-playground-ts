@@ -2,7 +2,7 @@
   "name": "tfjs-examples-micro",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "license": "Apache-2.0",
   "private": true,
   "engines": {
