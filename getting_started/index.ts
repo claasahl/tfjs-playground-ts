@@ -22,7 +22,7 @@ import * as tf from '@tensorflow/tfjs';
 // and refresh the index.html to quickly explore the API.
 
 // Tiny TFJS train / predict example.
-async function myFirstTfjs() {
+async function myFirstTfjs(): Promise<void> {
   // Create a simple model.
   const model = tf.sequential();
   model.add(tf.layers.dense({units: 1, inputShape: [1]}));
@@ -42,8 +42,8 @@ async function myFirstTfjs() {
 
   // Use the model to do inference on a data point the model hasn't seen.
   // Should print approximately 39.
-  document.getElementById('micro_out_div').innerText +=
-      model.predict(tf.tensor2d([20], [1, 1]));
+  const prediction = model.predict(tf.tensor2d([20], [1, 1]));
+  //console.log(JSON.stringify(prediction));
 }
 
 myFirstTfjs();
