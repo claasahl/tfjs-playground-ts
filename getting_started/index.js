@@ -15,6 +15,7 @@
 * limitations under the License.
 * ==============================================================================
 */
+import * as tf from '@tensorflow/tfjs';
 
 // This tiny example illustrates how little code is necessary build /
 // train / predict from a model in TensorFlow.js.  Edit this code
