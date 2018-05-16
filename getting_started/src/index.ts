@@ -43,7 +43,7 @@ async function myFirstTfjs(): Promise<void> {
   // Use the model to do inference on a data point the model hasn't seen.
   // Should print approximately 39.
   const prediction = model.predict(tf.tensor2d([20], [1, 1]));
-  //console.log(JSON.stringify(prediction));
+  prediction.print();
 }
 
 myFirstTfjs();
