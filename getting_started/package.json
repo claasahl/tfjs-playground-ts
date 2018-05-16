@@ -12,9 +12,9 @@
     "@tensorflow/tfjs": "^0.10.3"
   },
   "scripts": {
-    "watch": "npm run build && node_modules/http-server/bin/http-server dist -p 1234 ",
-    "build": "mkdir -p dist/ && cp index.html dist/ && cp index.js dist/",
-    "start": "parcel -p 8080 src/index.html"
+    "watch": "parcel watch src/index.html",
+    "build": "parcel build src/index.html",
+    "start": "parcel src/index.html"
   },
   "devDependencies": {
     "clang-format": "~1.2.2",
