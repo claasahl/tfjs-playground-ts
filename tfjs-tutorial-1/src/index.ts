@@ -1,49 +1,57 @@
-/**
-* @license
-* Copyright 2018 Google LLC. All Rights Reserved.
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-* http:// www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-* ==============================================================================
-*/
 import * as tf from '@tensorflow/tfjs';
 
-// This tiny example illustrates how little code is necessary build /
-// train / predict from a model in TensorFlow.js.  Edit this code
-// and refresh the index.html to quickly explore the API.
+// https://js.tensorflow.org/tutorials/core-concepts.html
+const shape = [2,3];
+const a = tf.tensor([1.0, 2.0, 3.0, 10.0, 20.0, 30.0], shape);
+a.print();
 
-// Tiny TFJS train / predict example.
-async function myFirstTfjs(): Promise<void> {
-  // Create a simple model.
-  const model = tf.sequential();
-  model.add(tf.layers.dense({units: 1, inputShape: [1]}));
+const b = tf.tensor([[1.1, 2.0, 3.0], [10.0, 20.0, 30.0]]);
+b.print();
 
-  // Prepare the model for training: Specify the loss and the optimizer.
-  model.compile({
-    loss: 'meanSquaredError',
-    optimizer: 'sgd'
+const c = tf.tensor1d([1.2, 2.0, 3.0, 10.0, 20.0, 30.0]);
+c.print();
+
+
+const initialValues = tf.zeros([5]);
+const biases = tf.variable(initialValues);
+biases.print();
+
+const updatedValues = tf.tensor1d([1,2,3,4,5]);
+biases.assign(updatedValues);
+biases.print();
+
+a.square().print();
+a.add(b).print();
+
+function predict(input: number) {
+  return tf.tidy(() => {
+    const x = tf.scalar(input);
+    const ax2 = aa.mul(x.square());
+    const bx = bb.mul(x);
+    const y = ax2.add(bx).add(cc);
+    return y;
   });
-
-  // Generate some synthetic data for training. (y = 2x - 1)
-  const xs = tf.tensor2d([-1, 0, 1, 2, 3, 4], [6, 1]);
-  const ys = tf.tensor2d([-3, -1, 1, 3, 5, 7], [6, 1]);
-
-  // Train the model using the data.
-  await model.fit(xs, ys, {epochs: 250});
-
-  // Use the model to do inference on a data point the model hasn't seen.
-  // Should print approximately 39.
-  const prediction = <tf.Tensor<tf.Rank>> model.predict(tf.tensor2d([20], [1, 1]));
-  prediction.print();
 }
 
-myFirstTfjs();
+const aa = tf.scalar(2);
+const bb = tf.scalar(4);
+const cc = tf.scalar(8);
+const result = predict(2);
+result.print();
+
+
+const model = tf.sequential();
+model.add(
+  tf.layers.simpleRNN({
+    units: 20,
+    recurrentInitializer: 'GlorotNormal',
+    inputShape: [4,1]
+  })
+);
+
+const data = tf.tensor1d([-1,-2,-3,-4,-5,1,23,2,3,4,5]);
+const labels = tf.tensor1d([-1,-1,-1,-1,-1,1,1,1,1,1,1]);
+const optimizer = tf.train.sgd(0.05);
+model.compile({optimizer, loss: 'categoricalCrossentropy'});
+model.fit(data, labels);
+const prediction = model.predict(tf.scalar(1));
