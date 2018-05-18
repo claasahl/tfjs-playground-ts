@@ -41,18 +41,20 @@ async function tutorial1() {
   result.print();
 
 
+  const data = tf.tensor1d([-1,-2,-3,-4,-5,1,23,2,3,4,5]);
+  const labels = tf.tensor1d([-1,-1,-1,-1,-1,1,1,1,1,1,1]);
+  const LEARNING_RATE = 0.05;
+
   const model = tf.sequential();
   model.add(
     tf.layers.simpleRNN({
       units: 20,
       recurrentInitializer: 'GlorotNormal',
-      inputShape: [4,1]
+      inputShape: [11, 3]
     })
   );
 
-  const data = tf.tensor1d([-1,-2,-3,-4,-5,1,23,2,3,4,5]);
-  const labels = tf.tensor1d([-1,-1,-1,-1,-1,1,1,1,1,1,1]);
-  const optimizer = tf.train.sgd(0.05);
+  const optimizer = tf.train.sgd(LEARNING_RATE);
   model.compile({optimizer, loss: 'categoricalCrossentropy'});
   await model.fit(data, labels);
   const prediction = <tf.Tensor<tf.Rank>>model.predict(tf.scalar(1));
