@@ -17,7 +17,14 @@
 
 import * as tf from '@tensorflow/tfjs';
 
-export function generateData(numPoints, coeff, sigma = 0.04) {
+interface Coefficients {
+  a: number,
+  b: number,
+  c: number,
+  d: number,
+}
+
+export function generateData(numPoints : number, coeff : Coefficients, sigma = 0.04) {
   return tf.tidy(() => {
     const [a, b, c, d] = [
       tf.scalar(coeff.a), tf.scalar(coeff.b), tf.scalar(coeff.c),
