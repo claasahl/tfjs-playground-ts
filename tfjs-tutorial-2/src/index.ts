@@ -60,10 +60,10 @@ const optimizer = tf.train.sgd(learningRate);
  *
  * @return number predicted y value
  */
-function predict(x : tf.Tensor) {
+function predict(x : tf.Scalar) {
   // y = a * x ^ 3 + b * x ^ 2 + c * x + d
   return tf.tidy(() => {
-    return a.mul(x.pow(tf.scalar(3, 'int32')))
+    return <tf.Scalar> a.mul(x.pow(tf.scalar(3, 'int32')))
       .add(b.mul(x.square()))
       .add(c.mul(x))
       .add(d);
@@ -77,10 +77,10 @@ function predict(x : tf.Tensor) {
  * prediction is a tensor with our predicted y values.
  * labels is a tensor with the y values the model should have predicted.
  */
-function loss(prediction : tf.Tensor, labels : tf.Tensor) {
+function loss(prediction : tf.Scalar, labels : tf.Scalar) {
   // Having a good error function is key for training a machine learning model
   const error = prediction.sub(labels).square().mean();
-  return error;
+  return <tf.Scalar> error;
 }
 
 /*
@@ -89,7 +89,7 @@ function loss(prediction : tf.Tensor, labels : tf.Tensor) {
  * xs - training data x values
  * ys — training data y values
  */
-async function train(xs : tf.Tensor, ys : tf.Tensor, numIterations : number) {
+async function train(xs : tf.Scalar, ys : tf.Scalar, numIterations : number) {
   for (let iter = 0; iter < numIterations; iter++) {
     // optimizer.minimize is where the training happens.
 

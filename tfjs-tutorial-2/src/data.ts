@@ -31,7 +31,7 @@ export function generateData(numPoints : number, coeff : Coefficients, sigma = 0
       tf.scalar(coeff.d)
     ];
 
-    const xs = tf.randomUniform([numPoints], -1, 1);
+    const xs = <tf.Scalar> tf.randomUniform([numPoints], -1, 1);
 
     // Generate polynomial data
     const three = tf.scalar(3, 'int32');
@@ -47,7 +47,7 @@ export function generateData(numPoints : number, coeff : Coefficients, sigma = 0
     const ymin = ys.min();
     const ymax = ys.max();
     const yrange = ymax.sub(ymin);
-    const ysNormalized = ys.sub(ymin).div(yrange);
+    const ysNormalized = <tf.Scalar > ys.sub(ymin).div(yrange);
 
     return {
       xs, 
